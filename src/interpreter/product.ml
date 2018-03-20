@@ -1,3 +1,6 @@
+let get_headers h_a h_b =
+  Array.append h_a h_b
+
 class product (a : AlgebraTypes.feed_interface) ( b : AlgebraTypes.feed_interface ) =
   object(self)
     inherit AlgebraTypes.feed_interface
@@ -19,7 +22,7 @@ class product (a : AlgebraTypes.feed_interface) ( b : AlgebraTypes.feed_interfac
       in 
       match (current, right_x) with
       | Some x, Some y ->
-        Some (x@y)
+        Some (Array.append x y)
       | _ -> None
 
     method reset =
@@ -27,5 +30,5 @@ class product (a : AlgebraTypes.feed_interface) ( b : AlgebraTypes.feed_interfac
       right#reset
 
     method headers =
-      left#headers @ right#headers
+      get_headers left#headers right#headers
   end 
